@@ -20,7 +20,7 @@ growingPlant:: Int -> Int -> Int -> Int
 growingPlant up down goal
     | up < 0 || down < 0 || goal < 0 = -1 --(-1) for invalid input
     | up >= goal = 1
-    | up < goal && up < down = -2 --(-2) for never getting the goals
+    | up < goal && up < down = -2 --(-2) for never getting the goals // не разбирам какво трябва да му се оправи
     | otherwise = 1 + growingPlant up down (goal - up + down)
     --otherwise = 1 + dayToReachGoal up down (goal - up + down)
 
