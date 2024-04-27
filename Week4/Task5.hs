@@ -7,11 +7,12 @@ main = do
     print $ isAscending 123 == True
     print $ isAscending 1233 == True
     print $ isAscending 12332 == False        
-    print $ head $ group $ show 10
-    print $ minimum $ group $ show 10
-    print $ (minimum $ group $ show 51) == (head $ group $ show 15)
+    --print $ head $ group $ show 10
+    --print $ sort $ group $ show 10
+    --print $ (minimum $ group $ show 51) == (head $ group $ show 15)
+    
 isAscending:: Int -> Bool
-isAscending x = (minimum $ group $ show x) == (head $ group $ show x)
+isAscending x = (group $ show x) == (sort $ group $ show x)
 -- Description:
 
 -- Define a function that checks whether the digits of a non-negative number are ordered in non-decreasing order.

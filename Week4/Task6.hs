@@ -19,7 +19,7 @@ isPrime num
             | otherwise = mod num x /= 0 && help (x - 1)
 
 sumSpecialPrimes:: Int -> Int -> Int
-sumSpecialPrimes n d = sum $ take n [x | x <- [2 .. ], isPrime x, elem [d] group [x] == True]
+sumSpecialPrimes n d = let t = show d in sum $ take n [x | x <- [2 .. ], isPrime x, elem t (group $ nub $ show x) == True]
 -- Description:
 
 -- Define a function that returns the sum of the first n prime numbers that contain a digit d.

@@ -13,14 +13,16 @@ main = do
     print $ growingPlant 3 2 10 == 8
     print $ growingPlant 20 5 100 == 7
     print $ growingPlant 10 3 5 == 1
-    print $ growingPlant 9 3 7 == 1
+    print $ growingPlant 3 5 7 == 1
     --my test
 
 growingPlant:: Int -> Int -> Int -> Int
 growingPlant up down goal
-    | up < 0 || down < 0 || goal < 0 = -1 --(-1) for invalid input
+    | up < 0 = -1 --(-1) for invalid input
+    | goal < 0 = -1 
+    | down < 0 = -1
     | up >= goal = 1
-    | up < goal && up < down = -2 --(-2) for never getting the goals // не разбирам какво трябва да му се оправи
+    | up < down = -1
     | otherwise = 1 + growingPlant up down (goal - up + down)
     --otherwise = 1 + dayToReachGoal up down (goal - up + down)
 
