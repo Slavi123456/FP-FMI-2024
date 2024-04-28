@@ -7,14 +7,14 @@ main = do
     print $ calcSeriesSum 1 3 -- == -1.047619047619048
     print $ calcSeriesSum 1 4 -- == -1.0814814814814817
     print $ calcSeriesSum 1 5 -- == -1.0753246753246755
-    print $ calcSeriesSum 1 6 -- == -1.0762718762718764    
+    print $ calcSeriesSum 1 6 -- == -1.0762718762718764  
 
 calcSeriesSum:: Double -> Double -> Double
 calcSeriesSum x n = helper 2 3
     where
         helper::Double -> Double -> Double
         helper idx dev
-            | idx > n = (-2)
+            | idx > (n + 1) = (-2)
             | otherwise = (((x**(idx - 1)) * (-2) ** idx) / dev ) + (helper (idx + 1) $ delitel idx 3)
 
 delitel:: Double -> Double -> Double
