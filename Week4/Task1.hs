@@ -21,7 +21,7 @@ mySumRecPM [] = 0
 mySumRecPM (x:xs) = x + mySumRecPM xs
 
 mySumFunc:: (Num a, Fractional a) => [a] -> a
-mySumFunc xs = sum xs
+mySumFunc = sum
 --Description:
 
 --Define a function that finds the sum of the elements in a list.

@@ -17,33 +17,40 @@ main = do
     print $ isPresentRecNonPM 0 [] == False
     print $ isPresentRecNonPM 0 [1, 2, 3] == False
     print $ isPresentRecNonPM 0 [0, -1, 2] == True
+    --my test 
+    print $ isPresentRecNonPM 13 [0, -1, 2, 6 ,43, 432, 13] == True
 
     print $ isPresentRecPM 0 [] == False
     print $ isPresentRecPM 0 [1, 2, 3] == False
     print $ isPresentRecPM 0 [0, -1, 2] == True
+    --my test 
+    print $ isPresentRecPM 13 [0, -1, 2, 6 ,43, 432, 13] == True
 
     print $ isPresentFunc 0 [] == False
     print $ isPresentFunc 0 [1, 2, 3] == False
     print $ isPresentFunc 0 [0, -1, 2] == True
+    --my test 
+    print $ isPresentFunc 13 [0, -1, 2, 6 ,43, 432, 13] == True
 
---Dava problemi //0-та като какъв тип я възприема?
--- isPresentRecNonPM:: (Num a, Fractional a ) => a -> [a] -> Bool
+--There is a problem when calling it lacks an accompanying binding
+-- isPresentRecNonPM:: (Eq a) => a -> [a] -> Bool
+-- isPresentRecNonPM _ [] = False
 -- isPresentRecNonPM num (x:xs)
 --     | num == x = True
 --     | otherwise = False || isPresentRecNonPM num xs
 
+
 isPresentRecNonPM::  Int -> [Int] -> Bool
-isPresentRecNonPM num xs
-    | null xs = False
-    | num == head xs = True
-    | otherwise = False || isPresentRecNonPM num (tail xs)
+isPresentRecNonPM num xs = if (null xs == False) then (if (num == head xs) then True else False || isPresentRecNonPM num (tail xs)) else False
+
+-- isPresentRecNonPM::  Int -> [Int] -> Bool
+-- isPresentRecNonPM num xs
+--     | null xs = False
+--     | otherwise = [num] == [head xs] || isPresentRecNonPM num (tail xs)
 
 isPresentRecPM:: Int -> [Int] -> Bool
 isPresentRecPM _ [] = False
-isPresentRecPM num (x:xs)
-    | num == x = True
-    | otherwise = False || isPresentRecPM num xs
+isPresentRecPM num (x:xs) = num == x || isPresentRecPM num xs
 
 isPresentFunc:: Int -> [Int] -> Bool
-isPresentFunc _ [] = False
-isPresentFunc x xs = elem x xs
+isPresentFunc = elem

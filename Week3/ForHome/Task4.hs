@@ -4,15 +4,16 @@ main = do
     print $ sumDivisibleNumbers 0 10 5 == 5
     print $ sumDivisibleNumbers 0 100 5 == 990
     print $ sumDivisibleNumbers 100 0 5 == 990
+    print $ sumDivisibleNumbers 3 3000 7
 
 sumDivisibleNumbers::Int ->Int ->Int ->Int
-sumDivisibleNumbers br1 br2 del = helper (min br1 br2) 
+sumDivisibleNumbers br1 br2 del = helper (min br1 br2) (max br1 br2) 0 
     where 
-        helper::Int ->Int
-        helper n
-            | n > max br1 br2 = 0
-            | mod (sumDigitsIter n) 5 == 0 = n + helper (n+1)
-            | otherwise = helper (n+1)
+        helper::Int ->Int ->Int ->Int
+        helper n border res 
+            | n > border = res
+            | mod (sumDigitsIter n) del == 0 = helper (n+1) border (res + n)
+            | otherwise = helper (n+1) border res
 
 sumDigitsIter:: Int -> Int
 sumDigitsIter num = sum num
