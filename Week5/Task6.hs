@@ -8,7 +8,7 @@ main = do
 
 --Type Func = (Int -> Int)
 
-pairCompose:: [Int -> Int] -> Int -> Int
+pairCompose:: [(Int -> Int)] -> Int -> Int
 pairCompose [] x = x
 pairCompose [f] x = f x
 pairCompose xs x =  pairCompose (drop 2 xs) x + ((xs!!0) $ (xs!!1) x)

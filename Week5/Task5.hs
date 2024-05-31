@@ -14,8 +14,8 @@ applyN f n = (\ x -> helper x n)
             | times  == 1 = f num
             | otherwise =  helper (f num) (times - 1) 
 
--- Как се прави задачата в един ред? (Да създадеш списък от функциите и да итерираш до празен списък)
--- Как се пишат guards в lambda functions
+-- Is there a way to be one liner task
+-- How to write more complex lambda functions with guards
 
 -- Description:
 

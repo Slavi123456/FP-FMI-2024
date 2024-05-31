@@ -9,21 +9,17 @@ main = do
     print $ getPalindromes 26362 == 26364
     --print $ sort $ [z | z <- [2 .. 132466], mod 132465 z == 0]     
     --print $ last $ sort $ [z | z <- [2 .. 132466], mod 132465 z == 0]
+    --print $ reverse $ show 32131
 
---copy paste
+
 isPalindrome:: Int -> Bool
-isPalindrome num = num == rev num 0
-    where 
-        rev::Int -> Int -> Int
-        rev n res 
-            | n < 10 = n + res * 10
-            | otherwise = rev (div n 10) (res * 10 + mod n 10) 
-            
+isPalindrome num = (show num) == (reverse $ show num)
+
 getPalindromes::Int -> Int
 getPalindromes n = (head $ helper n) + (last $ helper n)
     where 
         helper:: Int -> [Int]
-        helper x = sort $ [z | z <- [2 .. (n + 1)], mod n z == 0, isPalindrome z == True]     
+        helper x = sort $ [z | z <- [2 .. n + 1], mod n z == 0, isPalindrome z]     
 
 
 -- Description:

@@ -35,18 +35,14 @@ main = do
 --There is a problem when calling it lacks an accompanying binding
 -- isPresentRecNonPM:: (Eq a) => a -> [a] -> Bool
 -- isPresentRecNonPM _ [] = False
--- isPresentRecNonPM num (x:xs)
---     | num == x = True
---     | otherwise = False || isPresentRecNonPM num xs
-
+-- isPresentRecNonPM num (x:xs) = num == x || isPresentRecNonPM num xs
 
 isPresentRecNonPM::  Int -> [Int] -> Bool
-isPresentRecNonPM num xs = if (null xs == False) then (if (num == head xs) then True else False || isPresentRecNonPM num (tail xs)) else False
+isPresentRecNonPM num xs = null [x | x <- xs, x == num] == False
 
--- isPresentRecNonPM::  Int -> [Int] -> Bool
--- isPresentRecNonPM num xs
---     | null xs = False
---     | otherwise = [num] == [head xs] || isPresentRecNonPM num (tail xs)
+
+--isPresentRecNonPM::  Int -> [Int] -> Bool
+--isPresentRecNonPM num xs = if (null xs == False) then (if (num == head xs) then True else False || isPresentRecNonPM num (tail xs)) else False
 
 isPresentRecPM:: Int -> [Int] -> Bool
 isPresentRecPM _ [] = False

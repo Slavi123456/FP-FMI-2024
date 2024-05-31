@@ -9,11 +9,11 @@ main = do
     print $ (switchSum (\x -> x + 1) (\x -> x * 2) 4) 2 == 30
 
 switchSum:: (Int -> Int) -> (Int->Int) -> Int -> (Int -> Int)
-switchSum _ _ 1 = (\ x -> f x)
-switchSum _ _ 2 = (\x -> g $ f x)
---switchSum f g n = (\ x -> f x + g $ f x  )
-
--- трябва ли да се мъча да правя задачите в един ред или мога да ползвам helper като например на тази
--- да направя списък с големина n където се редуват двете функции и просто 
--- null xs = x
--- x:xs =  recursive xs $ x num 
+switchSum f _ 1 = (\ x -> f x)
+switchSum f g n = (\ x -> helper 0 x 0) 
+    where
+        helper:: Int -> Int -> Int -> Int
+        helper num mem res
+            | num == n = res
+            | mod num 2 == 0 = helper (num + 1) (f mem) (res + f mem)
+            | otherwise = helper (num + 1) (g mem) (res + g mem)

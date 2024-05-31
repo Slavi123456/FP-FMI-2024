@@ -3,12 +3,14 @@ import Data.List
 main::IO()
 main = do
     print $ specialSum 1 100 == 195 -- 61, 65, 69
-    print $ (round $ fromIntegral $ div (61 - 1) 4 ) == 15
+    --print $ (round $ fromIntegral $ div (61 - 1) 4 ) == 15
     --print $ mod 95 4
     --print [z | z <- [1.. 100], elem "6" (group $ nub $ show z) == True, mod (z - 1) 4 == 0]
 specialSum:: Int -> Int -> Int
-specialSum x y = sum $ [z | z <- [x .. y], elem "6" (group $ nub $ show z) == True, mod (z - 1) 4 == 0]
+specialSum x y = sum $ [z | z <- [x .. y], doesContain z 6, mod (z - 1) 4 == 0]
 
+doesContain::Int -> Int -> Bool
+doesContain num n = elem (intToDigit n) (show num)
 -- Description:
 
 -- Define a function that returns the sum of the special numbers in the interval [x, y] (x <= y). A number is special if it contains 6 and can be expressed as 4k + 1, where k is a whole number.

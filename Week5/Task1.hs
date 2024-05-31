@@ -8,24 +8,18 @@ main = do
     print $ getPrimesHOF 1 100 == [7,17,37,47,67,71,73,79,97]
     print $ getPrimesHOF 100 1 == [7,17,37,47,67,71,73,79,97]
     
-    --print $ elem "7" (group $ nub $ show 17)
---copy paste
+    print $ elem '7' (show 175435423777)
 isPrime:: Int -> Bool
-isPrime 2 = True
-isPrime num 
-    | num <= 1 = False
-    | otherwise = help (num - 1)
-    where 
-        help:: Int -> Bool
-        help x 
-            | x == 2 = mod num x /= 0 
-            | otherwise = mod num x /= 0 && help (x - 1)
+isPrime num = num > 1 && null [x |x <- [2 .. num - 1], mod num x == 0]
 
 getPrimesLC:: Int -> Int -> [Int]
-getPrimesLC x y = [z | z <- [(min x y).. (max x y )], isPrime z == True, elem "7" (group $ nub $ show z) == True]
+getPrimesLC x y = [z | z <- [min x y.. max x y ], isPrime z, doesContain z 7]
 
 getPrimesHOF:: Int -> Int -> [Int]
-getPrimesHOF x y = filter (\z -> isPrime z == True && elem "7" (group $ nub $ show z) == True) [(min x y).. (max x y )]
+getPrimesHOF x y = filter (\z -> isPrime z && doesContain z 7) [min x y.. max x y ]
+
+doesContain::Int -> Int -> Bool
+doesContain num n = elem (intToDigit n) (show num)
 -- Description:
 
 -- Define a function that returns the prime numbers in the range (x, y) that contain the digit 7.
