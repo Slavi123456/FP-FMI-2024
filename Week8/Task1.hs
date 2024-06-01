@@ -9,20 +9,38 @@ main = do
     print $ simplePaths [(1, [2, 3]), (2, [3, 4]), (3, []), (4, [])] 1 2 -- == [[2,3],[2,4]]
     print $ simplePaths [(1, [2, 3]), (2, [3]), (3, []), (4, [])] 1 2 -- == [[2,3]]
 
+    print $ simplePaths [(1, [2, 3]), (2, [3]), (3, []), (4, [])] 2 5 -- == [[2,3]]
     -- print $ generatePath [(1, [2, 3]), (2, [3, 4]), (3, []), (4, [])] 1 2
     -- print $ neighbors [(1, [2, 3]), (2, [3]), (3, []), (4, [])] 2
+    -- print $ map (\(x,ys) -> [x] ++ ys)  [(1, [2, 3]), (2, [3]), (3, []), (4, [])]
+    -- print $ nodes [(1, [2, 3]), (2, [3]), (3, []), (4, [])]
+    -- print $ elem 5 $ nodes [(1, [2, 3]), (2, [3]), (3, []), (4, [])]
+
 type Node = Int
 type Path = [Node]
 type Graph = [(Node, [Node])]
 
--- simplePaths:: Graph -> Int -> Node -> Path
--- simplePaths gr k n = helper 0 [(fst $ head gr)] []
---     where 
---         helper:: Int -> [Node] ->Path -> Path 
---         helper:: _ [] _ = []
---         helper num node res 
---             | num == k = res
---             |otherwise = helper (num+1) [(head $ neighbors gr node)]  (res ++ [node]) --filter (\(parent, childred) -> parent == node) gr 
+generatePath:: Graph -> Int -> Node  -> [Path]
+generatePath gr k n = helper (fst $ head gr) k [] [[]]
+    where 
+        helper:: Node -> Int ->Path -> [Path] -> [Path]
+        helper par max res final 
+            | length res >= max = (final ++ [res])
+            | null $ neighbors gr par = (final ++ [res ++ [par]])
+            | otherwise = concat $ map (\x -> helper x max (res ++ [par]) final) (neighbors gr par)
+
+
+nodes::Graph -> [Node]
+nodes gr = nub $ concat $ map (\(x,ys) -> [x] ++ ys) gr
+
+simplePaths::Graph -> Int -> Node -> [Path]
+simplePaths gr k n 
+    | elem n (nodes gr) == False = error "There is no such node" 
+    | otherwise = nub $ filter (\ns -> length ns == k + 1)(generatePath gr (k+1) n)
+
+neighbors:: Graph -> Node -> [Node]
+neighbors gr n = head $ [childred |(parent, childred) <- gr, parent == n]
+
 
 -- generatePath:: Graph -> Node -> Int -> Path
 -- generatePath gr n k = helper (fst $ head gr) 0 []
@@ -41,27 +59,15 @@ type Graph = [(Node, [Node])]
 --             | null $ neighbors gr par = res ++ [par]
 --             | otherwise = helper (head $ neighbors gr par) (res ++ [par])
 
-generatePath:: Graph -> Node -> Int -> [Path]
-generatePath gr n k = helper (fst $ head gr) 1 [n]--map (\x -> helper x 1 [n]) (neighbors gr n)
-    where 
-        helper:: Node -> Int -> [Path] -> [Path]
-        helper par num res 
-            | num >= k = res 
-            | null $ neighbors gr par = res ++ [par]
-            | otherwise = map (\x -> helper x (num + 1) (res ++ [par])) (neighbors gr par)
-
-simplePaths::Graph -> Int -> Node -> [Path]
-simplePaths gr 0 n = [[n]]
-simplePaths gr k n = generatePath gr n (k + 1) -- filter (\ns -> length ns == k + 1)(generatePath gr n)
-
-
-neighbors:: Graph -> Node -> [Node]
-neighbors gr n = head $ [childred |(parent, childred) <- gr, parent == n]
-
--- pathGenerator:: Graph -> [Path]
--- pathGenerator (g:gs) = [fst g] ++ helper 
+-- generatePath:: Graph -> Node -> Int -> [Path]
+-- generatePath gr n k = helper (fst $ head gr) [] [[]]
 --     where 
---         helper:: Node -> (Node, [Node])
+--         helper:: Node -> Path -> [Path] -> [Path]
+--         helper par res final 
+--             | null $ neighbors gr par = (final ++ [res ++ [par]])
+--             | otherwise = concat $ map (\x -> helper x (res ++ [par]) final) (neighbors gr par)
+
+
 -- Description:
 
 -- Define a function that accepts a graph, a whole number k and a node n. Return all the paths starting 
